@@ -7,6 +7,7 @@ import (
     "flag"
     "hash/fnv"
     "strconv"
+    "strings"
 )
 
 var dbPath string
@@ -36,6 +37,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		var ircMessage string
 		err = rows.Scan(&serverName, &roomName, &userName, &currentTime, &ircMessage)
 		checkErr(err)
+
+		// Normalize percent signs
+		serverName = strings.Replace(serverName, "%", "%%", -1)
+		roomName = strings.Replace(roomName, "%", "%%", -1)
+		userName = strings.Replace(userName, "%", "%%", -1)
+		currentTime = strings.Replace(currentTime, "%", "%%", -1)
+		ircMessage = strings.Replace(ircMessage, "%", "%%", -1)
 
 		// Getting userName's hash
 		h := fnv.New32a()
