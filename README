@@ -24,8 +24,14 @@ sqlite> select * from zogger;
 listenSocket = ":9991"
 dbPath = "db.sqlite3"
 dbName = "zogger"
+webUser = "" // No HTTP-authentication by default
+webAss = "" // No HTTP-authentication by default
+webAssFile = "" // Password file is not used by default. It should contain password to avoid a commandline parameter being visible in "ps"
+webCrtFile = "" // No HTTPS by default, pass your ssl certificate file here
+webKeyFile = "" // No HTTPS by default, pass your ssl key file here
 You can override them with cmdline switches, or just:
 ./webzogger
 and proxy the 9991 port via your web-server frontend.
 
-The built binary can be stripped and compressed with goupx.
+The built binary can be stripped and compressed with upx.
+You can use the same password file both for webzogger and multiple zoggers, writing logs to the same database.
